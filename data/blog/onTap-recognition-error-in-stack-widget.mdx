@@ -1,0 +1,178 @@
+---
+title: Stack 위젯의 onTap 인식 오류
+date: '2024-05-27'
+lastmod: '2024-05-27'
+tags: ['flutter', 'error']
+draft: false
+authors: ['default']
+layout: PostLayout
+summary: 'Stack 위젯의 onTap 인식 오류를 해결하기 위해 DeferPointer 패키지를 사용했습니다. 이 패키지를 사용하면 부모 위젯의 범위를 벗어난 자식 위젯의 클릭 이벤트도 정상적으로 인식됩니다.'
+---
+
+## 구현
+
+Stack 위젯의 자식으로 Container와 Positioned이 위치하는 일반적인 카드 형태의 UI를 구현했습니다.
+
+## 문제점
+
+삭제 버튼을 클릭했을 때 이벤트가 정상적으로 실행될 때도 있지만 안될 때도 있었습니다.
+
+처음에는 Badges 패키지에서 발생한 오류로 생각해서 패키지를 사용하지 않고 구현해보기도 하고 Badge 패키지를 Gesturedetector 위젯으로 감싸기도 했지만 여전히 제대로 작동하지 않았다.
+
+구글링 끝에 에러 원인을 찾았다.
+
+[Flutter Issue Fixed: onTap Gesture isn’t recognised in Stack if the child widget is outside of its parent’s bound](https://medium.com/@BhawaniTechDev/flutter-issue-fixed-ontap-gesture-isnt-recognised-in-stack-if-the-child-widget-is-outside-of-its-a975d0c82964)
+
+> Stack 위젯의 자식 요소에서 onTap이 작동하려면 Stack 위젯 범위 내에 위치해야한다.
+
+현재 구현한 UI에서는 삭제 버튼의 1/4 가량 만이 Stack 위젯에 포함되어있다. 그래서 해당 부분을 클릭했을 때는 이벤트가 정상적으로 작동하지만 이외의 범위를 클릭했을 때는 이벤트가 발생하지 않은 것이다.
+
+## 해결법
+
+[DeferPointer](https://pub.dev/documentation/defer_pointer/latest/) 패키지를 이용하여 부모 위젯의 범위와 상관 없이 자식 위젯의 클릭 이벤트를 받을 수 있도록 수정했다.
+
+* 부모 위젯을 `DeferredPointerHandler`로 감싼다.
+* onTap 이벤트를 실행할 자식 위젯을 `DeferPointer`로 감싼다.
+
+## 수정 전 코드
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:badges/badges.dart' as badges;
+
+class ConsentListWidget extends StatelessWidget {
+  const ConsentListWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: 160,
+          height: 80,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(10)),
+          alignment: Alignment.center,
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Hayden',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Gap(4),
+              Text(
+                '010-1234-5678',
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          top: -8,
+          right: -8,
+          child: badges.Badge(
+            showBadge: true,
+            ignorePointer: false,
+            onTap: () {
+              debugPrint('Badge tapped');
+            },
+            badgeContent: const Icon(
+              Icons.close,
+              color: Colors.white,
+              size: 10,
+            ),
+            badgeStyle: badges.BadgeStyle(
+              shape: badges.BadgeShape.circle,
+              badgeColor: Colors.red,
+              padding: const EdgeInsets.all(5),
+              borderRadius: BorderRadius.circular(5),
+              elevation: 0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+```
+
+## 수정 후 코드
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:defer_pointer/defer_pointer.dart'; // Import the package
+
+class ConsentListWidget extends StatelessWidget {
+  const ConsentListWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DeferredPointerHandler( // Wrap with DeferredPointerHandler
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            width: 160,
+            height: 80,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(10)),
+            alignment: Alignment.center,
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Hayden',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                Gap(4),
+                Text(
+                  '010-1234-5678',
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: -8,
+            right: -8,
+            child: DeferPointer( // Wrap with DeferPointer
+              child: badges.Badge(
+                showBadge: true,
+                ignorePointer: false,
+                onTap: () {
+                  debugPrint('Badge tapped');
+                },
+                badgeContent: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 10,
+                ),
+                badgeStyle: badges.BadgeStyle(
+                  shape: badges.BadgeShape.circle,
+                  badgeColor: Colors.red,
+                  padding: const EdgeInsets.all(5),
+                  borderRadius: BorderRadius.circular(5),
+                  elevation: 0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
