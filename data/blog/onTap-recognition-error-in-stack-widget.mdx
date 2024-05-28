@@ -13,26 +13,34 @@ summary: 'Stack 위젯의 onTap 인식 오류를 해결하기 위해 DeferPointe
 
 Stack 위젯의 자식으로 Container와 Positioned이 위치하는 일반적인 카드 형태의 UI를 구현했습니다.
 
+![Stack 위젯 으로 구현한 카드 UI](/static/images/onTap-recognition-error-in-stack-widget/240520-093203.png)
+
 ## 문제점
 
-삭제 버튼을 클릭했을 때 이벤트가 정상적으로 실행될 때도 있지만 안될 때도 있었습니다.
+삭제 버튼을 클릭했을 때 이벤트가 정상적으로 실행될 때도 있지만 그렇지 않은 경우도 발생했습니다.
 
-처음에는 Badges 패키지에서 발생한 오류로 생각해서 패키지를 사용하지 않고 구현해보기도 하고 Badge 패키지를 Gesturedetector 위젯으로 감싸기도 했지만 여전히 제대로 작동하지 않았다.
+처음에는 Badges 패키지에서 발생한 오류로 생각해서 패키지를 사용하지 않고 구현해보기도 하고 Badge 패키지를 Gesturedetector 위젯으로 감싸기도 했지만 여전히 제대로 작동하지 않았습니다.
 
-구글링 끝에 에러 원인을 찾았다.
+여러 시도를 해보았고 다행히 구글링 끝에 에러 원인을 찾았습니다.
 
 [Flutter Issue Fixed: onTap Gesture isn’t recognised in Stack if the child widget is outside of its parent’s bound](https://medium.com/@BhawaniTechDev/flutter-issue-fixed-ontap-gesture-isnt-recognised-in-stack-if-the-child-widget-is-outside-of-its-a975d0c82964)
 
 > Stack 위젯의 자식 요소에서 onTap이 작동하려면 Stack 위젯 범위 내에 위치해야한다.
 
-현재 구현한 UI에서는 삭제 버튼의 1/4 가량 만이 Stack 위젯에 포함되어있다. 그래서 해당 부분을 클릭했을 때는 이벤트가 정상적으로 작동하지만 이외의 범위를 클릭했을 때는 이벤트가 발생하지 않은 것이다.
+현재 구현한 UI에서는 삭제 버튼의 1/4 가량만이 Stack 위젯에 포함되어 있습니다. 그래서 해당 부분을 클릭했을 때는 이벤트가 정상적으로 작동하지만 이외의 범위를 클릭했을 때는 이벤트가 발생하지 않았던 것입니다.
+
+![inspector로 확인한 Stack 위젯의 범위](/static/images/onTap-recognition-error-in-stack-widget/240520-093226.png)
+
+![Stack 위젯의 클릭 이벤트 허용 범위](/static/images/onTap-recognition-error-in-stack-widget/240521-081359.png)
 
 ## 해결법
 
-[DeferPointer](https://pub.dev/documentation/defer_pointer/latest/) 패키지를 이용하여 부모 위젯의 범위와 상관 없이 자식 위젯의 클릭 이벤트를 받을 수 있도록 수정했다.
+[DeferPointer](https://pub.dev/documentation/defer_pointer/latest/) 패키지를 이용하여 부모 위젯의 범위와 상관 없이 자식 위젯의 클릭 이벤트를 받을 수 있도록 수정했습니다.
 
-* 부모 위젯을 `DeferredPointerHandler`로 감싼다.
-* onTap 이벤트를 실행할 자식 위젯을 `DeferPointer`로 감싼다.
+- 부모 위젯을 `DeferredPointerHandler`로 감싼다.
+- onTap 이벤트를 실행할 자식 위젯을 `DeferPointer`로 감싼다.
+
+![정상적으로 출력되는 onTap event GIF](/static/images/onTap-recognition-error-in-stack-widget/240528-085006.gif)
 
 ## 수정 전 코드
 
