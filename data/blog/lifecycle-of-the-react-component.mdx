@@ -1,0 +1,157 @@
+---
+title: React 컴포넌트의 생명주기는 어떻게 되는가?
+date: '2024-05-31'
+lastmod: '2024-05-31'
+tags: ['react', 'component', 'lifecycle']
+draft: false
+authors: ['default']
+layout: PostLayout
+summary: 'React 컴포넌트의 생명주기는 컴포넌트가 생성되고 제거되기까지의 과정을 설명합니다. 이러한 생명주기는 클래스형 컴포넌트와 함수형 컴포넌트 간에 약간의 차이가 있습니다. 두 유형의 컴포넌트 생명주기에 대해 설명하고, 둘 간의 주요 차이점을 살펴봅시다.'
+---
+
+# React 컴포넌트 생명주기
+
+React 컴포넌트는 생성, 사용, 소멸의 과정을 거치며 이를 생명주기(Life Cycle)라고 합니다. 각 시점에서 자동으로 호출되는 메서드들을 라이프 사이클 이벤트라고 하며, 이를 통해 컴포넌트의 동작을 제어하고 최적화할 수 있습니다.
+
+---
+
+## 클래스형 컴포넌트
+
+클래스형 컴포넌트에서는 다양한 라이프 사이클 메서드를 사용할 수 있습니다. React 16과 17의 변경 사항도 유의해야 합니다.
+
+![클래스형 컴포넌트에서 React 생명주기](/static/images/lifecycle-of-the-react-component/240531-024924.png)
+
+### 마운팅 (Mounting)
+
+- 컴포넌트가 DOM에 추가될 때 발생
+- 메서드:
+  - `constructor()`: 컴포넌트를 초기화하고 state를 설정합니다.
+  - `componentWillMount()`: 컴포넌트가 마운트되기 직전에 호출됩니다. (React 17에서는 deprecated)
+  - `render()`: 컴포넌트의 UI를 렌더링합니다.
+  - `componentDidMount()`: 컴포넌트가 마운트된 후에 호출됩니다.
+
+### 갱신 (Updating)
+
+- props나 state가 변경될 때 발생
+- 메서드:
+  - `getDerivedStateFromProps(props, state)`: props로 받아온 값을 state에 설정하고 싶을 때 사용됩니다. 마운트와 갱신 시 모두 render 메서드 호출 직전에 호출되며, 특정 객체를 반환하면 해당 값이 state로 갱신되고, null을 반환하면 아무 것도 갱신하지 않습니다.
+  - `componentWillReceiveProps(nextProps)`: 새로운 props를 받을 때 호출됩니다. (React 17에서는 deprecated)
+  - `shouldComponentUpdate(nextProps, nextState)`: 컴포넌트가 업데이트되어야 하는지 결정합니다.
+  - `componentWillUpdate(nextProps, nextState)`: 컴포넌트가 업데이트되기 직전에 호출됩니다. (React 17에서는 deprecated)
+  - `render()`: 컴포넌트의 UI를 다시 렌더링합니다.
+  - `getSnapshotBeforeUpdate(prevProps, prevState)`: 가장 마지막으로 렌더링된 결과가 DOM 등에 반영되기 전에 호출됩니다. 이 메서드를 사용하면 DOM 상태가 변경되기 전의 값을 반환하여 `componentDidUpdate`에서 인자로 사용할 수 있습니다.
+  - `componentDidUpdate(prevProps, prevState)`: 컴포넌트가 업데이트된 후에 호출됩니다.
+
+### 언마운팅 (Unmounting)
+
+- 컴포넌트가 DOM에서 제거될 때 발생
+- 메서드:
+  - `componentWillUnmount()`: 컴포넌트가 언마운트되기 직전에 호출됩니다.
+
+### 에러 처리 (Error Handling)
+
+- 컴포넌트 내에서 에러가 발생했을 때 호출
+- 메서드:
+  - `componentDidCatch(error, info)`: 에러 발생 시 호출됩니다.
+
+```jsx
+class Logger extends React.Component {
+  constructor(props) {
+    super(props)
+    console.log('constructor')
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('getDerivedStateFromProps 실행')
+    return null // state를 업데이트할 필요가 없을 때
+  }
+
+  componentWillMount() {
+    console.log('componentWillMount 실행')
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount 실행')
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log('componentWillReceiveProps 실행')
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    console.log('shouldComponentUpdate 실행')
+    return true
+  }
+
+  componentWillUpdate(newProps, newState) {
+    console.log('componentWillUpdate 실행')
+  }
+
+  componentDidUpdate(oldProps, oldState) {
+    console.log('componentDidUpdate 실행')
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('getSnapshotBeforeUpdate 실행')
+    return null // 반환된 값은 componentDidUpdate에서 세 번째 인자로 전달됩니다.
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount 실행')
+  }
+
+  render() {
+    return <div>{this.props.time}</div>
+  }
+}
+```
+
+---
+
+## 함수형 컴포넌트
+
+함수형 컴포넌트에서는 React Hooks를 사용하여 생명주기 메서드와 같은 기능을 구현합니다.
+
+![함수형 컴포넌트에서 React 생명주기](/static/images/lifecycle-of-the-react-component/240531-024935.png)
+
+- `useEffect()`: 마운트, 업데이트, 언마운트 시점을 제어할 수 있습니다.
+
+### 함수형 컴포넌트 예제
+
+```jsx
+import React, { useState, useEffect } from 'react'
+
+const Logger = (props) => {
+  const [time, setTime] = useState(props.time)
+
+  useEffect(() => {
+    console.log('componentDidMount & componentDidUpdate 실행')
+    return () => {
+      console.log('componentWillUnmount 실행')
+    }
+  }, [time])
+
+  useEffect(() => {
+    console.log('componentWillReceiveProps 실행')
+  }, [props])
+
+  return <div>{time}</div>
+}
+```
+
+---
+
+## 클래스형과 함수형의 차이
+
+| 특성                 | 클래스형 컴포넌트                            | 함수형 컴포넌트                   |
+| -------------------- | -------------------------------------------- | --------------------------------- |
+| 상태 관리            | `this.state`와 `this.setState` 사용          | `useState` Hook 사용              |
+| 라이프 사이클 메서드 | `componentDidMount`, `componentDidUpdate` 등 | `useEffect` Hook 사용             |
+| 코드량 및 가독성     | 상대적으로 더 많은 코드와 복잡성             | 간결하고 함수형 프로그래밍 스타일 |
+| React 버전 지원      | React 16 이상                                | React 16.8 이상                   |
+
+---
+
+## 결론
+
+React 컴포넌트의 생명주기를 이해하면 컴포넌트의 동작을 효과적으로 제어하고 성능을 최적화할 수 있습니다. 클래스형 컴포넌트는 다양한 라이프 사이클 메서드를 제공하지만, 함수형 컴포넌트와 Hooks를 사용하면 더 간결하고 직관적인 코드를 작성할 수 있습니다. 최근의 React 개발에서는 주로 함수형 컴포넌트와 Hooks를 권장합니다.
