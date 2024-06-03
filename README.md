@@ -1,5 +1,3 @@
-![tailwind-nextjs-banner](/public/static/images/twitter-card.png)
-
 # Tailwind Nextjs Starter Blog
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/timlrx/tailwind-nextjs-starter-blog?style=social)](https://GitHub.com/timlrx/tailwind-nextjs-starter-blog/stargazers/)
@@ -103,7 +101,7 @@ Thanks to the community of users and contributors to the template! We are no lon
 - [raphaelchelly.com](https://www.raphaelchelly.com/) - Raphaël Chelly's personal website and blog ([source code](https://github.com/raphaelchelly/raph_www))
 - [kaveh.page](https://kaveh.page) - Kaveh Tehrani's personal blog. Added tags directory, profile card, time-to-read on posts directory, etc.
 - [drakerossman.com](https://drakerossman.com/) - Drake Rossman's blog about NixOS, Rust, Software Architecture and Engineering Management, as well as general musings.
-  
+
 ## Motivation
 
 I wanted to port my existing blog to Nextjs and Tailwind CSS but there was no easy out of the box template to use so I decided to create one. Design is adapted from [Tailwindlabs blog](https://github.com/tailwindlabs/blog.tailwindcss.com).
@@ -299,4 +297,3 @@ Using the template? Support this effort by giving a star on GitHub, sharing your
 ## Licence
 
 [MIT](https://github.com/timlrx/tailwind-nextjs-starter-blog/blob/main/LICENSE) © [Timothy Lin](https://www.timlrx.com)
-# next-blog
