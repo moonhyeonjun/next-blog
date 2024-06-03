@@ -15,6 +15,8 @@ Stack 위젯의 자식으로 Container와 Positioned이 위치하는 일반적�
 
 ![Stack 위젯 으로 구현한 카드 UI](/static/images/onTap-recognition-error-in-stack-widget/240520-093203.png)
 
+---
+
 ## 문제점
 
 삭제 버튼을 클릭했을 때 이벤트가 정상적으로 실행될 때도 있지만 그렇지 않은 경우도 발생했습니다.
@@ -33,6 +35,8 @@ Stack 위젯의 자식으로 Container와 Positioned이 위치하는 일반적�
 
 ![Stack 위젯의 클릭 이벤트 허용 범위](/static/images/onTap-recognition-error-in-stack-widget/240521-081359.png)
 
+---
+
 ## 해결법
 
 [DeferPointer](https://pub.dev/documentation/defer_pointer/latest/) 패키지를 이용하여 부모 위젯의 범위와 상관 없이 자식 위젯의 클릭 이벤트를 받을 수 있도록 수정했습니다.
@@ -41,6 +45,8 @@ Stack 위젯의 자식으로 Container와 Positioned이 위치하는 일반적�
 - onTap 이벤트를 실행할 자식 위젯을 `DeferPointer`로 감싼다.
 
 ![정상적으로 출력되는 onTap event GIF](/static/images/onTap-recognition-error-in-stack-widget/240528-085006.gif)
+
+---
 
 ## 수정 전 코드
 
@@ -110,6 +116,8 @@ class ConsentListWidget extends StatelessWidget {
   }
 }
 ```
+
+---
 
 ## 수정 후 코드
 

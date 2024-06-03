@@ -13,6 +13,8 @@ summary: react-responsive 라이브러리를 사용하여 반응형 웹사이트
 
 최근 진행한 React 프로젝트에서 반응형 디자인을 추가하는 작업을 진행했습니다. 특히 테이블의 칼럼 및 디자인을 다양한 화면 크기에 맞게 변경해야 했습니다. 처음에는 CSS의 `media query`를 사용했으나, 여러 한계에 부딪혀 `react-responsive` 라이브러리를 도입하게 되었습니다. 이번 글에서는 `react-responsive`를 사용하여 반응형 테이블을 구현하는 방법과 `media query`와의 차이점을 비교해보겠습니다.
 
+---
+
 ## react-responsive 사용 예시
 
 먼저, `react-responsive` 라이브러리를 설치합니다:
@@ -59,6 +61,8 @@ const CommonTable = ({ desktopColumns, mobileColumns, datasource }) => (
 export default CommonTable
 ```
 
+---
+
 ## media query와 react-responsive 비교
 
 | 특징                   | media query               | react-responsive                   |
@@ -68,6 +72,8 @@ export default CommonTable
 | 가독성                 | CSS 파일이 길어질 수 있음 | 컴포넌트 내 조건문으로 가독성 향상 |
 | 유지보수성             | CSS와 JS 분리로 관리 필요 | JS 코드 내 통합 관리 가능          |
 | 반응성                 | 즉각적 반응               | 렌더링 최적화 가능                 |
+
+---
 
 ## 결론
 
