@@ -1,0 +1,109 @@
+---
+title: Next.js에 NProgress 적용하기
+date: '2024-06-10'
+lastmod: '2024-06-10'
+tags: ['nextjs', 'nprogress']
+draft: false
+authors: ['default']
+layout: PostLayout
+summary: 'Next.js 프로젝트에 NProgress 라이브러리를 적용하여 페이지 로딩 시 진행 상태를 시각적으로 표시하는 방법에 대해 알아보겠습니다.'
+---
+
+## 서론
+
+Next.js 프로젝트에서 페이지 로딩 시 진행 상태를 시각적으로 보여주는 것은 사용자 경험을 향상시키는 데 매우 유용합니다. 이를 위해 `NProgress` 라이브러리를 사용할 수 있습니다. `NProgress`는 페이지 로드 중에 진행 상태 바를 표시해주는 JavaScript 라이브러리입니다. 이번 글에서는 Next.js 애플리케이션에 `NProgress`를 적용하는 방법에 대해 알아보겠습니다.
+
+---
+
+## NProgress 설치
+
+우선 `NProgress`와 TypeScript 환경을 위한 타입 정의 파일을 설치해야 합니다.
+
+```bash
+npm i nprogress
+npm i --save-dev @types/nprogress
+```
+
+---
+
+## NProgress 적용
+
+다음은 `NProgress`를 적용하는 코드입니다. `pages/_app.tsx` 파일을 수정하여 `NProgress`를 설정하고, Next.js의 라우터 이벤트를 활용해 페이지 로드 상태를 관리할 수 있습니다.
+
+![NProgress를 적용한 페이지 로딩 GIF](/static/images/apply-nprogress-to-nextjs/20240610-105844.gif)
+
+```tsx
+import React from 'react'
+import NProgress from 'nprogress'
+import { useRouter } from 'next/router'
+import type { AppProps } from 'next/app'
+import 'nprogress/nprogress.css'
+import '@/styles/globals.css'
+
+export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter()
+
+  const handleNProgressDone = () => NProgress.done()
+
+  React.useEffect(() => {
+    const handleRouteChange = (url: string, { shallow }: { shallow: boolean }) => {
+      if (!shallow) {
+        NProgress.start()
+      }
+    }
+
+    router.events.on('routeChangeStart', handleRouteChange)
+    router.events.on('routeChangeComplete', handleNProgressDone)
+    router.events.on('routeChangeError', handleNProgressDone)
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange)
+      router.events.off('routeChangeComplete', handleNProgressDone)
+      router.events.off('routeChangeError', handleNProgressDone)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return <Component {...pageProps} />
+}
+```
+
+위 코드는 라우터 이벤트를 감지하여 페이지 이동 시작 시 `NProgress.start()`를 호출하고, 이동이 완료되거나 에러가 발생하면 `NProgress.done()`을 호출하여 진행 상태 바를 중지합니다. 이로써 페이지 로딩 시 시각적인 피드백을 제공할 수 있습니다.
+
+---
+
+## 스타일링
+
+기본 `NProgress` 스타일을 커스터마이징하여 애플리케이션의 테마에 맞출 수 있습니다. 예를 들어, 진행 상태 바의 색상을 변경하고 스피너를 제거하는 방법은 다음과 같습니다.
+
+![NProgress를 적용한 페이지 로딩 GIF (CSS 추가)](/static/images/apply-nprogress-to-nextjs/20240610-105918.gif)
+
+```css
+:root {
+  --primary-color: #7d3c98;
+}
+
+#nprogress {
+  pointer-events: none; /* 마우스 이벤트 없음 */
+}
+
+#nprogress .bar {
+  background: var(--primary-color);
+}
+```
+
+위 스타일을 적용하면 진행 상태 바의 색상이 변경됩니다. 스피너를 제거하려면 다음 CSS를 추가합니다.
+
+```css
+#nprogress .spinner-icon {
+  display: none;
+}
+```
+
+이로써 `NProgress`를 적용하여 사용자에게 더 나은 페이지 전환 경험을 제공할 수 있습니다.
+
+---
+
+## 결론
+
+`NProgress`를 Next.js 프로젝트에 적용하는 방법을 살펴보았습니다. `NProgress`를 통해 페이지 전환 시 진행 상태를 시각적으로 표시함으로써 사용자가 현재 페이지가 로드 중임을 명확히 알 수 있어 사용자 경험을 향상시킬 수 있습니다. 간단한 설정과 스타일링으로 프로젝트에 쉽게 적용할 수 있으니, 여러분의 Next.js 애플리케이션에도 `NProgress`를 도입해 보세요.
