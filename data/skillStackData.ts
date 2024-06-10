@@ -81,6 +81,13 @@ const skillStackData: SkillStack[] = [
         icon: '/static/images/skills/react-query.png',
         level: 0.6,
       },
+      {
+        name: 'Recoil',
+        description:
+          'Recoil을 사용하여 React 애플리케이션의 상태 관리를 간결하고 효율적으로 수행할 수 있습니다.',
+        icon: '/static/images/skills/recoil.png',
+        level: 0.7,
+      },
     ],
   },
   {
@@ -110,6 +117,12 @@ const skillStackData: SkillStack[] = [
         description: 'PostgreSQL을 사용하여 관계형 데이터베이스를 설계하고 관리할 수 있습니다.',
         icon: '/static/images/skills/postgresql.png',
         level: 0.4,
+      },
+      {
+        name: 'MSSQL',
+        description: 'MSSQL을 사용하여 관계형 데이터베이스를 설계하고 관리할 수 있습니다.',
+        icon: '/static/images/skills/mssql.png',
+        level: 0.6,
       },
       {
         name: 'Sequelize',
