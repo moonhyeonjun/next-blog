@@ -32,14 +32,14 @@ const skillStackData: SkillStack[] = [
         name: 'JavaScript',
         description: 'JavaScript를 이용하여 DOM을 조작하고 객체 모델을 활용할 수 있습니다.',
         icon: '/static/images/skills/javascript.png',
-        level: 0.7,
+        level: 0.8,
       },
       {
         name: 'TypeScript',
         description:
           'TypeScript를 사용하여 JavaScript 애플리케이션의 타입 안정성을 강화할 수 있습니다.',
         icon: '/static/images/skills/typescript.png',
-        level: 0.5,
+        level: 0.7,
       },
       {
         name: 'babel',
@@ -50,9 +50,9 @@ const skillStackData: SkillStack[] = [
       },
       {
         name: 'webpack',
-        description: 'webpack을 사용하여 모듈과 자산을 번들링할 수 있습니다.',
+        description: 'webpack을 사용하여 모듈을 번들링할 수 있습니다.',
         icon: '/static/images/skills/webpack.png',
-        level: 0.3,
+        level: 0.6,
       },
       {
         name: 'React',
@@ -65,14 +65,14 @@ const skillStackData: SkillStack[] = [
         description:
           'Next.js를 사용하여 서버 사이드 렌더링 및 정적 사이트 생성을 구현할 수 있습니다.',
         icon: '/static/images/skills/nextjs.png',
-        level: 0.5,
+        level: 0.6,
       },
       {
         name: 'Redux',
         description:
           'Redux를 사용하여 React 애플리케이션의 상태 관리를 효율적으로 수행할 수 있습니다.',
         icon: '/static/images/skills/redux.png',
-        level: 0.6,
+        level: 0.7,
       },
     ],
   },
@@ -84,7 +84,7 @@ const skillStackData: SkillStack[] = [
         name: 'Node.js',
         description: 'Node.js를 사용하여 서버 사이드 로직을 개발할 수 있습니다.',
         icon: '/static/images/skills/node.png',
-        level: 0.6,
+        level: 0.7,
       },
       {
         name: 'Express',
@@ -96,11 +96,11 @@ const skillStackData: SkillStack[] = [
         name: 'MySQL',
         description: 'MySQL을 사용하여 관계형 데이터베이스를 설계하고 관리할 수 있습니다.',
         icon: '/static/images/skills/mysql.png',
-        level: 0.4,
+        level: 0.6,
       },
       {
         name: 'PostgreSQL',
-        description: 'PostgreSQL을 사용하여 데이터베이스 솔루션을 구현할 수 있습니다.',
+        description: 'PostgreSQL을 사용하여 관계형 데이터베이스를 설계하고 관리할 수 있습니다.',
         icon: '/static/images/skills/postgresql.png',
         level: 0.4,
       },
@@ -121,13 +121,13 @@ const skillStackData: SkillStack[] = [
         name: 'git',
         description: 'git을 사용하여 코드 버전 관리 및 협업을 수행할 수 있습니다.',
         icon: '/static/images/skills/git.png',
-        level: 0.5,
+        level: 0.7,
       },
       {
         name: 'Docker',
         description: 'Docker를 사용하여 애플리케이션을 컨테이너화하고 배포할 수 있습니다.',
         icon: '/static/images/skills/docker.png',
-        level: 0.3,
+        level: 0.4,
       },
       {
         name: 'Linux',
