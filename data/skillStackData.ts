@@ -74,6 +74,13 @@ const skillStackData: SkillStack[] = [
         icon: '/static/images/skills/redux.png',
         level: 0.7,
       },
+      {
+        name: 'React-Query',
+        description:
+          'React-Query를 사용하여 React 애플리케이션의 데이터 가져오기 및 캐싱을 효율적으로 수행할 수 있습니다.',
+        icon: '/static/images/skills/react-query.png',
+        level: 0.6,
+      },
     ],
   },
   {
