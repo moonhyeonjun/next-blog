@@ -107,6 +107,19 @@ const skillStackData: SkillStack[] = [
         level: 0.5,
       },
       {
+        name: 'Java',
+        description:
+          'Java 문법을 이해하고 적용할 수 있으며, 객체 지향 프로그래밍을 학습하고 있습니다.',
+        icon: '/static/images/skills/java.png',
+        level: 0.4,
+      },
+      {
+        name: 'Spring',
+        description: 'Spring 프레임워크를 이용하여 RESTful 서비스를 구축할 수 있습니다.',
+        icon: '/static/images/skills/spring.png',
+        level: 0.3,
+      },
+      {
         name: 'MySQL',
         description: 'MySQL을 사용하여 관계형 데이터베이스를 설계하고 관리할 수 있습니다.',
         icon: '/static/images/skills/mysql.png',
@@ -139,7 +152,7 @@ const skillStackData: SkillStack[] = [
     skills: [
       {
         name: 'git',
-        description: 'git을 사용하여 코드 버전 관리 및 협업을 수행할 수 있습니다.',
+        description: 'git을 사용하여 코드 버전 관리 및 협업�� 수행할 수 있습니다.',
         icon: '/static/images/skills/git.png',
         level: 0.7,
       },
