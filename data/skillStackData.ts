@@ -152,7 +152,7 @@ const skillStackData: SkillStack[] = [
     skills: [
       {
         name: 'git',
-        description: 'git을 사용하여 코드 버전 관리 및 협업�� 수행할 수 있습니다.',
+        description: 'git을 사용하여 코드 버전 관리 및 협업을 효율적으로 수행할 수 있습니다.',
         icon: '/static/images/skills/git.png',
         level: 0.7,
       },
