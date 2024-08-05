@@ -42,15 +42,15 @@ const skillStackData: SkillStack[] = [
         level: 0.7,
       },
       {
-        name: 'babel',
+        name: 'Babel',
         description:
           'Babel을 사용하여 최신 JavaScript 코드를 이전 버전과 호환되게 컴파일할 수 있습니다.',
         icon: '/static/images/skills/babel.png',
         level: 0.5,
       },
       {
-        name: 'webpack',
-        description: 'webpack을 사용하여 모듈을 번들링할 수 있습니다.',
+        name: 'Webpack',
+        description: 'Webpack을 사용하여 모듈을 번들링할 수 있습니다.',
         icon: '/static/images/skills/webpack.png',
         level: 0.6,
       },
@@ -87,6 +87,27 @@ const skillStackData: SkillStack[] = [
           'Recoil을 사용하여 React 애플리케이션의 상태 관리를 간결하고 효율적으로 수행할 수 있습니다.',
         icon: '/static/images/skills/recoil.png',
         level: 0.7,
+      },
+      {
+        name: 'Zustand',
+        description:
+          'Zustand를 사용하여 React 애플리케이션의 상태 관리를 효율적으로 수행할 수 있습니다.',
+        icon: '/static/images/skills/zustand.png',
+        level: 0.7,
+      },
+      {
+        name: 'Tailwind CSS',
+        description:
+          'Tailwind CSS를 사용하여 CSS를 빠르게 작성하고 반응형 디자인을 구현할 수 있습니다.',
+        icon: '/static/images/skills/tailwindcss.png',
+        level: 0.6,
+      },
+      {
+        name: 'Ant Design',
+        description:
+          'Ant Design을 사용하여 React 애플리케이션의 UI 컴포넌트를 빠르게 구축할 수 있습니다.',
+        icon: '/static/images/skills/antdesign.png',
+        level: 0.6,
       },
     ],
   },
@@ -147,11 +168,24 @@ const skillStackData: SkillStack[] = [
     ],
   },
   {
+    // 모바일 앱 개발
+    name: 'Mobile',
+    level: 'Beginner',
+    skills: [
+      {
+        name: 'Flutter',
+        description: 'Flutter를 사용하여 상태 관리 및 커스텀 위젯을 제작할 수 있습니다.',
+        icon: '/static/images/skills/flutter.png',
+        level: 0.6,
+      },
+    ],
+  },
+  {
     name: 'DevOps',
     level: 'Beginner',
     skills: [
       {
-        name: 'git',
+        name: 'Git',
         description: 'git을 사용하여 코드 버전 관리 및 협업을 효율적으로 수행할 수 있습니다.',
         icon: '/static/images/skills/git.png',
         level: 0.7,
